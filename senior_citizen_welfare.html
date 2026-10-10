@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Citizen Welfare | SchemeSense AI</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f7fc;color:#1e293b}
+header{background:#172554;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:bold}
+.logo span{color:#93c5fd}
+header a{color:white;text-decoration:none;border:1px solid #bfdbfe;padding:10px 14px;border-radius:8px}
+.hero{background:linear-gradient(120deg,#1e3a8a,#2563eb);color:white;padding:48px 7%}
+.hero h1{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
+.hero p{line-height:1.8;max-width:750px;color:#e0eaff}
+main{max-width:1100px;margin:auto;padding:35px 20px}
+.panel{background:white;padding:25px;border-radius:14px;box-shadow:0 5px 20px #0f172a0b;margin-bottom:25px}
+h2{color:#1e3a8a;margin-bottom:15px}
+label{display:block;font-weight:bold;margin:15px 0 8px}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;background:white}
+.primary,.btn{display:inline-block;border:0;border-radius:8px;padding:12px 16px;background:#2563eb;color:white;text-decoration:none;cursor:pointer;font-size:14px;margin-top:15px}
+.primary{width:100%;font-size:16px}
+.btn.secondary{background:#0f766e}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:white;padding:23px;border:1px solid #e2e8f0;border-radius:13px;box-shadow:0 4px 14px #0f172a08}
+.card h3{color:#1e3a8a;line-height:1.5;margin:12px 0}
+.card p{color:#64748b;line-height:1.7}
+.tag{display:inline-block;background:#dbeafe;color:#1e40af;padding:6px 9px;border-radius:6px;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions .btn{margin-top:14px}
+#resultsSection,#message{display:none}
+.note{color:#64748b;font-size:13px;line-height:1.7;margin-top:18px}
+footer{text-align:center;background:#0f172a;color:#cbd5e1;padding:22px;line-height:1.8}
+@media(max-width:600px){.hero{padding:35px 5%}main{padding:25px 14px}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">Scheme<span>Sense</span> AI</div>
+  <a href="index.html">← Dashboard</a>
+</header>
+
+<section class="hero">
+  <h1>Senior Citizen Welfare</h1>
+  <p>Enter your age to explore potentially relevant welfare schemes, pension support, healthcare information and savings options.</p>
+</section>
+
+<main>
+  <section class="panel">
+    <h2>Find Suitable Schemes</h2>
+    <p>Enter the person's age and select their state to find schemes worth checking.</p>
+
+    <form id="schemeForm">
+      <label for="age">Age (years)</label>
+      <input id="age" type="number" min="1" max="120" placeholder="Enter age, e.g. 65" required>
+
+      <label for="state">State / Union Territory</label>
+      <select id="state" required>
+        <option value="">Select state</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Other">Other state / Union Territory</option>
+      </select>
+
+      <button class="primary" type="submit">Find Schemes →</button>
+    </form>
+
+    <p class="note">Age-based results are suggestions, not a final eligibility decision. Some schemes require additional conditions.</p>
+  </section>
+
+  <p id="message" class="panel" role="status"></p>
+
+  <section id="resultsSection">
+    <h2>Recommended Schemes</h2>
+    <p id="resultSummary" class="note"></p>
+    <div id="results" class="results"></div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 SchemeSense AI</p>
+  <p>Explore government welfare information with ease.</p>
+</footer>
+
+<script>
+const schemes = [
+  {
+    id: "pension",
+    title: "Indira Gandhi National Old Age Pension Scheme",
+    category: "Pension Support",
+    minAge: 60,
+    description: "Social assistance pension for eligible older people. Income, household and other government criteria may apply.",
+    official: "https://nsap.nic.in/"
+  },
+  {
+    id: "savings",
+    title: "Senior Citizens' Savings Scheme",
+    category: "Savings",
+    minAge: 60,
+    description: "Government-backed savings option. Special rules may apply to certain retired people aged 55–59.",
+    official: "https://www.indiapost.gov.in/VAS/Pages/PMODashboard/SeniorCitizenSavingsScheme.aspx"
+  },
+  {
+    id: "health",
+    title: "Ayushman Bharat PM-JAY",
+    category: "Healthcare",
+    minAge: 1,
+    description: "Check the official scheme portal for beneficiary eligibility and available health coverage. Age alone does not establish eligibility.",
+    official: "https://pmjay.gov.in/"
+  },
+  {
+    id: "health70",
+    title: "Ayushman Vay Vandana Card",
+    category: "Healthcare for people aged 70+",
+    minAge: 70,
+    description: "The government has announced health coverage under AB PM-JAY for eligible senior citizens aged 70 and above, irrespective of income. Check official enrolment rules.",
+    official: "https://nha.gov.in/"
+  },
+  {
+    id: "tn",
+    title: "Tamil Nadu Government Welfare Services",
+    category: "State Welfare",
+    minAge: 60,
+    tamilNaduOnly: true,
+    description: "Explore state government services and verify the current eligibility requirements for relevant senior citizen assistance.",
+    official: "https://www.tn.gov.in/"
+  }
+];
+
+const form = document.getElementById("schemeForm");
+const message = document.getElementById("message");
+const section = document.getElementById("resultsSection");
+const results = document.getElementById("results");
+const summary = document.getElementById("resultSummary");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const age = Number(document.getElementById("age").value);
+  const state = document.getElementById("state").value;
+
+  if (!Number.isInteger(age) || age < 1 || age > 120 || !state) {
+    message.style.display = "block";
+    message.textContent = "Please enter a valid age and select a state.";
+    section.style.display = "none";
+    return;
+  }
+
+  const matches = schemes.filter(function(scheme) {
+    if (age < scheme.minAge) return false;
+    if (scheme.tamilNaduOnly && state !== "Tamil Nadu") return false;
+    return true;
+  });
+
+  results.replaceChildren();
+  message.style.display = "none";
+  section.style.display = "block";
+
+  summary.textContent =
+    "Age entered: " + age + " | State: " + state +
+    ". These are schemes to explore, not confirmed eligibility.";
+
+  if (matches.length === 0) {
+    const p = document.createElement("p");
+    p.textContent = "No matching suggestions found. Please check the official state and central government portals.";
+    results.appendChild(p);
+    return;
+  }
+
+  matches.forEach(function(scheme) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = scheme.category;
+
+    const title = document.createElement("h3");
+    title.textContent = scheme.title;
+
+    const description = document.createElement("p");
+    description.textContent = scheme.description;
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const details = document.createElement("a");
+    details.className = "btn";
+    details.href = "senior_citizen_details.html#" + scheme.id;
+    details.textContent = "View Details";
+
+    const official = document.createElement("a");
+    official.className = "btn secondary";
+    official.href = scheme.official;
+    official.target = "_blank";
+    official.rel = "noopener noreferrer";
+    official.textContent = "Official Website ↗";
+
+    actions.append(details, official);
+    card.append(tag, title, description, actions);
+    results.appendChild(card);
+  });
+
+  section.scrollIntoView({behavior: "smooth"});
+});
+</script>
+</body>
+</html>

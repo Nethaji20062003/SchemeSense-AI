@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Scholarship Finder | SchemeSense AI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#eaf2ff,#f8faff);color:#243047;min-height:100vh}
+header{background:#173b70;color:#fff;padding:20px 7%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header h1{font-size:25px}
+.back-button{background:#fff;color:#173b70;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:bold}
+.container{max-width:850px;margin:35px auto;padding:20px}
+.intro{text-align:center;margin-bottom:25px}
+.intro h2{font-size:30px;color:#173b70;margin-bottom:12px}
+.intro p{color:#5d687a;line-height:1.7}
+.form-card,.result-card{background:#fff;padding:30px;border-radius:16px;box-shadow:0 8px 25px rgba(30,60,100,.1);margin-bottom:22px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+label{display:block;margin-bottom:9px;font-weight:bold;color:#263b59}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;background:#fff;color:#243047}
+.search-button{width:100%;margin-top:22px;padding:15px;background:#245eb5;color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+.muted{font-size:13px;color:#64748b;line-height:1.6;margin-top:14px}
+.hidden{display:none}
+.result-card h3{color:#173b70;margin-bottom:15px}
+.details{background:#f4f8ff;border-radius:10px;padding:15px;line-height:1.8;margin-bottom:18px}
+.scheme{border:1px solid #dbe6f5;border-left:5px solid #245eb5;border-radius:10px;padding:17px;margin:14px 0}
+.scheme h4{font-size:17px;color:#173b70;margin-bottom:8px}
+.scheme p{line-height:1.6;color:#46556b;margin-bottom:10px}
+.scheme a{display:inline-block;background:#245eb5;color:#fff;text-decoration:none;padding:10px 13px;border-radius:7px;font-weight:bold;font-size:14px}
+.notice{background:#fff7df;border:1px solid #f2d98b;padding:14px;border-radius:9px;line-height:1.6;color:#664d03;margin-top:16px}
+footer{text-align:center;color:#64748b;padding:20px;font-size:13px}
+@media(max-width:650px){
+.container{margin:18px auto;padding:14px}
+.form-card,.result-card{padding:20px}
+.form-grid{grid-template-columns:1fr}
+.intro h2{font-size:25px}
+header h1{font-size:21px}
+}
+</style>
+</head>
+
+<body>
+<header>
+<h1>🎓 SchemeSense AI</h1>
+<a class="back-button" href="index.html">← Back to Dashboard</a>
+</header>
+
+<main class="container">
+<section class="intro">
+<h2>College Scholarship Finder</h2>
+<p>
+Enter your education and family details to explore scholarship programmes that may be relevant to you.<br>
+This page focuses on college-level schemes. Results are information leads—not confirmation of eligibility.
+</p>
+</section>
+
+<section class="form-card">
+<form id="collegeForm">
+<div class="form-grid">
+
+<div>
+<label for="state">State / UT</label>
+<select id="state" required>
+<option value="">Select state</option>
+<option>Tamil Nadu</option>
+<option>Kerala</option>
+<option>Karnataka</option>
+<option>Andhra Pradesh</option>
+<option>Telangana</option>
+<option>Maharashtra</option>
+<option>Other</option>
+</select>
+</div>
+
+<div>
+<label for="district">District</label>
+<input id="district" placeholder="Enter district" required>
+</div>
+
+<div>
+<label for="level">Education level</label>
+<select id="level" required>
+<option value="">Select level</option>
+<option value="Diploma">Diploma</option>
+<option value="UG">Undergraduate (UG)</option>
+<option value="PG">Postgraduate (PG)</option>
+<option value="Research">Research / PhD</option>
+</select>
+</div>
+
+<div>
+<label for="courseArea">Course area</label>
+<select id="courseArea" required>
+<option value="">Select course area</option>
+<option>Engineering & Technology</option>
+<option>Medical / Dental</option>
+<option>Nursing</option>
+<option>Agriculture</option>
+<option>Law</option>
+<option>Arts & Science</option>
+<option>Polytechnic / Diploma</option>
+<option>Pharmacy / Allied Health</option>
+<option>Management</option>
+<option>Other Professional Course</option>
+<option>Research / PhD</option>
+</select>
+</div>
+
+<div>
+<label for="course">Course / Programme name</label>
+<input id="course" placeholder="e.g., B.E. Computer Science" required>
+</div>
+
+<div>
+<label for="collegeType">College type</label>
+<select id="collegeType" required>
+<option value="">Select college type</option>
+<option>Government</option>
+<option>Government-aided</option>
+<option>Private</option>
+</select>
+</div>
+
+<div>
+<label for="year">Current year of study</label>
+<select id="year" required>
+<option value="">Select year</option>
+<option>1st year</option>
+<option>2nd year</option>
+<option>3rd year</option>
+<option>4th year</option>
+<option>5th year or above</option>
+</select>
+</div>
+
+<div>
+<label for="community">Community category</label>
+<select id="community">
+<option value="">Not applicable / Prefer not to say</option>
+<option>SC</option>
+<option>ST</option>
+<option>OBC</option>
+<option>BC</option>
+<option>MBC / DNC</option>
+<option>EWS / General</option>
+<option>Other</option>
+</select>
+</div>
+
+<div>
+<label for="income">Annual family income</label>
+<select id="income" required>
+<option value="">Select income range</option>
+<option value="under1">Below ₹1 lakh</option>
+<option value="1to2.5">₹1 lakh – ₹2.5 lakh</option>
+<option value="2.5to5">₹2.5 lakh – ₹5 lakh</option>
+<option value="above5">Above ₹5 lakh</option>
+<option value="unknown">Not sure</option>
+</select>
+</div>
+
+<div>
+<label for="marks">Last exam marks (%) — optional</label>
+<input id="marks" type="number" min="0" max="100" step="0.01" placeholder="e.g., 78.5">
+</div>
+
+<div>
+<label for="hostel">Staying in hostel?</label>
+<select id="hostel">
+<option value="">Choose if applicable</option>
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+
+<div>
+<label for="gender">Gender — optional</label>
+<select id="gender">
+<option value="">Prefer not to say</option>
+<option value="Girl / woman">Girl / woman</option>
+<option value="Boy / man">Boy / man</option>
+<option value="Transgender / intersex">Transgender / intersex</option>
+</select>
+</div>
+
+<div>
+<label for="schoolBackground">Classes 6–12 school background</label>
+<select id="schoolBackground">
+<option value="">Select school background</option>
+<option value="Government school">Government school</option>
+<option value="Government-aided Tamil-medium school">Government-aided Tamil-medium school</option>
+<option value="Other">Other / not sure</option>
+</select>
+</div>
+
+</div>
+
+<button class="search-button" type="submit">Find Scholarship Information</button>
+<p class="muted">This demo uses your answers in the browser only. It does not send or store your information on a server.</p>
+</form>
+</section>
+
+<section id="results" class="result-card hidden" aria-live="polite">
+<h3>Possible scholarship leads</h3>
+<div id="studentDetails" class="details"></div>
+<div id="schemeList"></div>
+<div class="notice">
+<strong>Important:</strong> These are potential scholarship leads, not an eligibility decision. Check the latest official notification for eligibility, benefit, documents, deadline and application method. This demo does not submit an application or verify eligibility.
+</div>
+</section>
+</main>
+
+<footer>SchemeSense AI · Student project prototype · Verify details on official portals</footer>
+
+<script>
+const officialLinks = {
+ nsp: "https://scholarships.gov.in/Students",
+ tn: "https://tndce.tn.gov.in/Home/scholarship",
+ bc: "https://www.bcmbcmw.tn.gov.in/welfschemes.htm",
+ tnminority: "https://www.bcmbcmw.tn.gov.in/welfschemes_minorities.htm",
+ tnSchemes: "https://tils.tn.gov.in/schemes",
+ tnega: "https://www.tnesevai.tn.gov.in/Pages/EsevaiServiceListInstitution.aspx"
+};
+
+const form = document.getElementById("collegeForm");
+
+form.addEventListener("submit", function(e) {
+ e.preventDefault();
+
+ const get = id => document.getElementById(id).value;
+
+ const state = get("state");
+ const district = get("district").trim();
+ const level = get("level");
+ const courseArea = get("courseArea");
+ const course = get("course").trim();
+ const collegeType = get("collegeType");
+ const year = get("year");
+ const community = get("community");
+ const income = get("income");
+ const marks = get("marks");
+ const hostel = get("hostel");
+ const gender = get("gender");
+ const schoolBackground = get("schoolBackground");
+
+ if (marks !== "" && (Number(marks) < 0 || Number(marks) > 100)) {
+   alert("Enter marks between 0 and 100.");
+   return;
+ }
+
+ document.getElementById("studentDetails").innerHTML =
+   "<strong>Your entered details</strong><br>" +
+   "Location: " + esc(district) + ", " + esc(state) + "<br>" +
+   "Education: " + esc(level) + " — " + esc(courseArea) + " — " + esc(course) + "<br>" +
+   "College: " + esc(collegeType) + " · " + esc(year) + "<br>" +
+   "Community: " + esc(community || "Not provided") + "<br>" +
+   "Annual family income: " +
+   esc(document.querySelector("#income option:checked").textContent) + "<br>" +
+   "Marks: " + esc(marks ? marks + "%" : "Not provided") + "<br>" +
+   "Hostel: " + esc(hostel || "Not provided") + "<br>" +
+   "Gender: " + esc(gender || "Not provided") + "<br>" +
+   "Classes 6–12 school background: " + esc(schoolBackground || "Not provided");
+
+ const schemes = [];
+
+ function add(title, desc, url, label = "Read official details") {
+   schemes.push({title, desc, url, label});
+ }
+
+ // Tamil Nadu monthly assistance schemes
+ if (state === "Tamil Nadu" && ["UG", "Diploma"].includes(level)) {
+   const qualifyingSchool = [
+     "Government school",
+     "Government-aided Tamil-medium school"
+   ].includes(schoolBackground);
+
+   if (qualifyingSchool && gender === "Girl / woman") {
+     add(
+       "Pudhumai Penn Scheme — Tamil Nadu",
+       "Potential match: eligible girl students who studied Classes 6–12 in government schools or qualifying government-aided Tamil-medium schools and pursue eligible higher education may receive ₹1,000 per month. Confirm the current rules and your records with your college nodal officer.",
+       officialLinks.tnSchemes,
+       "Pudhumai Penn — Official Scheme Details"
+     );
+   }
+
+   if (qualifyingSchool && gender === "Boy / man") {
+     add(
+       "Tamil Pudhalvan Scheme — Tamil Nadu",
+       "Potential match: eligible boy students who studied Classes 6–12 in government schools or qualifying government-aided Tamil-medium schools and pursue eligible higher education may receive ₹1,000 per month. Confirm the current rules and your records with your college nodal officer.",
+       officialLinks.tnSchemes,
+       "Tamil Pudhalvan — Official Scheme Details"
+     );
+   }
+
+   if (gender === "Transgender / intersex") {
+     add(
+       "Tamil Nadu Higher-Education Assistance — Eligibility Check",
+       "Ask your college nodal officer to confirm which current higher-education assistance scheme applies to you and which documents are required.",
+       officialLinks.tnSchemes,
+       "View Official Scheme Details"
+     );
+   }
+
+   if (!qualifyingSchool && gender !== "Transgender / intersex") {
+     add(
+       "Tamil Pudhalvan / Pudhumai Penn — School-History Eligibility Check",
+       "These schemes have specific school-history and other eligibility conditions. Your selected school background does not establish a match. Ask your college nodal officer to verify the current government guidelines.",
+       officialLinks.tnSchemes,
+       "Read Official Scheme Information"
+     );
+   }
+ }
+
+ // BC, MBC, DNC and OBC schemes
+ if (state === "Tamil Nadu" && ["BC", "MBC / DNC", "OBC"].includes(community)) {
+   add(
+     "Tamil Nadu / PM-YASASVI Post-Matric Scholarship",
+     "Potential assistance for eligible BC, MBC and DNC students in specified courses and institutions. Income, course, institution and admission conditions may apply. Confirm the latest notification and application dates with your college scholarship office.",
+     "https://coimbatore.nic.in/pm-yas yasvi-post-matric-scholarship-scheme-2026-27/",
+     "Check Current Scholarship Notice"
+   );
+
+   add(
+     "BC / MBC / DNC Free Education Schemes",
+     "Separate conditions may apply to UG, Polytechnic and professional courses. Family income, first-graduate status, institution type and admission quota can affect eligibility.",
+     officialLinks.bc,
+     "Check Tamil Nadu Welfare Rules"
+   );
+ }
+
+ // SC and ST schemes
+ if (state === "Tamil Nadu" && ["SC", "ST"].includes(community)) {
+   add(
+     "Post-Matric Scholarship for SC / ST Students",
+     "Tamil Nadu lists post-matric and higher-education assistance for eligible SC/ST students. Eligible courses, income conditions and application routes vary by scheme. Ask your college scholarship office to verify current rules.",
+     officialLinks.tnega,
+     "View Official e-Sevai Service List"
+   );
+
+   add(
+     "Higher-Education Special Scholarship / State Assistance",
+     "Higher-education assistance may be available for eligible students under notified conditions. Confirm the current scheme notification and application process with your institution.",
+     officialLinks.tnega,
+     "Check Official Service List"
+   );
+ }
+
+ // Medical and dental course-specific scheme
+ if (
+   state === "Tamil Nadu" &&
+   ["Medical / Dental", "Nursing", "Pharmacy / Allied Health"].includes(courseArea)
+ ) {
+   add(
+     "Medical / Dental Fee Reimbursement — Specific Eligibility",
+     "Tamil Nadu has fee-reimbursement provisions for eligible students entering specified medical/dental courses through the 7.5% preferential allotment route. This is not a general scholarship for every medical or allied-health student. Confirm the exact course coverage and rules.",
+     officialLinks.bc,
+     "Read Specific Rules"
+   );
+ }
+
+ // PG Arts and Science
+ if (state === "Tamil Nadu" && level === "PG" && courseArea === "Arts & Science") {
+   add(
+     "EVR Nagammai Scholarship",
+     "This scheme has been described for eligible girl students pursuing postgraduate Arts and Science courses in recognised Tamil Nadu colleges. Check the current notification, eligibility and application dates.",
+     officialLinks.tn,
+     "View Collegiate Education Information"
+   );
+ }
+
+ // Central scholarship for UG and PG
+ if (["UG", "PG"].includes(level)) {
+   add(
+     "PM-USP Central Sector Scheme of Scholarship",
+     "A central merit-based scholarship listed on the National Scholarship Portal. Academic performance, family income, course, institution and other conditions apply. Being a college student alone does not establish eligibility.",
+     officialLinks.nsp,
+     "National Scholarship Portal — Student Services"
+   );
+ }
+
+ // ST higher education scheme
+ if (community === "ST") {
+   add(
+     "National Scholarship for Higher Education of ST Students",
+     "A central scholarship for eligible ST students pursuing specified higher-education courses and institutions, subject to the current notification and conditions.",
+     officialLinks.nsp,
+     "Check Current NSP Notification"
+   );
+ }
+
+ // General central scholarship search
+ if (
+   ["OBC", "EWS / General", "Other", ""].includes(community) ||
+   state !== "Tamil Nadu"
+ ) {
+   add(
+     "National Scholarship Portal — College Student Services",
+     "Use the official student services page to explore central scholarship schemes by course, category and institution. Read each scheme's eligibility criteria and application dates carefully.",
+     officialLinks.nsp,
+     "Explore College Scholarships"
+   );
+ }
+
+ // Always include college scholarship officer guidance
+ add(
+   "Contact Your College Scholarship / Nodal Officer",
+   "Your college can confirm which scheme applies to your course, admission quota and institution, and explain required documents. This page does not certify eligibility or submit an application.",
+   state === "Tamil Nadu" ? officialLinks.tnSchemes : officialLinks.nsp,
+   state === "Tamil Nadu" ? "View Tamil Nadu Scheme Information" : "Open National Scholarship Portal"
+ );
+
+ document.getElementById("schemeList").innerHTML = schemes.map(s =>
+   '<article class="scheme">' +
+   '<h4>' + esc(s.title) + '</h4>' +
+   '<p>' + esc(s.desc) + '</p>' +
+   '<a href="' + s.url + '" target="_blank" rel="noopener noreferrer">' +
+   esc(s.label) + ' ↗</a></article>'
+ ).join("");
+
+ const results = document.getElementById("results");
+ results.classList.remove("hidden");
+ results.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+function esc(value) {
+ return String(value).replace(/[&<>"']/g, function(c) {
+   return {
+     "&":"&amp;",
+     "<":"&lt;",
+     ">":"&gt;",
+     '"':"&quot;",
+     "'":"&#39;"
+   }[c];
+ });
+}
+</script>
+</body>
+</html>

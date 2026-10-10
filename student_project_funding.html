@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Project Funding | SchemeSense AI</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5ff;
+    color: #243047;
+}
+
+header {
+    background: #173b70;
+    color: white;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header a {
+    background: white;
+    color: #173b70;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1050px;
+    margin: 30px auto;
+    padding: 0 18px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.hero h2 {
+    color: #173b70;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 22px #173b7014;
+    margin-bottom: 22px;
+}
+
+.card h3 {
+    color: #173b70;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    background: #2864bd;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #173b70;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.small {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+.opportunity {
+    border: 1px solid #dbe5f2;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 14px 0;
+}
+
+.opportunity h4 {
+    color: #173b70;
+    margin-bottom: 9px;
+}
+
+.opportunity p {
+    color: #526176;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.opportunity a {
+    display: inline-block;
+    background: #eaf1ff;
+    color: #174a93;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.notice {
+    background: #fff7df;
+    color: #664d03;
+    border: 1px solid #f2dda0;
+    border-radius: 9px;
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 20px;
+    font-size: 12px;
+}
+
+@media(max-width: 760px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+    .card {
+        padding: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 SchemeSense AI</h1>
+    <a href="index.html">← Back to Dashboard</a>
+</header>
+
+<main>
+
+<section class="hero">
+    <h2>Student Project Funding</h2>
+    <p>
+        Find possible funding starting points for your college projects,
+        research ideas, prototypes and student startups.
+    </p>
+</section>
+
+<div class="layout">
+
+<section class="card">
+    <h3>📝 Project Details</h3>
+
+    <form id="fundingForm">
+        <div class="form-grid">
+
+            <div class="full">
+                <label for="projectName">Project Name</label>
+                <input id="projectName" required
+                placeholder="Enter your project name">
+            </div>
+
+            <div class="full">
+                <label for="description">Project Description</label>
+                <textarea id="description" required
+                placeholder="Explain the problem your project solves"></textarea>
+            </div>
+
+            <div>
+                <label for="category">Project Category</label>
+                <select id="category" required>
+                    <option value="">Select category</option>
+                    <option value="software">Software Development</option>
+                    <option value="ai">Artificial Intelligence</option>
+                    <option value="cloud">Cloud Computing</option>
+                    <option value="cyber">Cybersecurity</option>
+                    <option value="iot">Hardware / IoT</option>
+                    <option value="research">Research Project</option>
+                    <option value="social">Social Impact</option>
+                    <option value="startup">Startup Idea</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="level">Education Level</label>
+                <select id="level" required>
+                    <option value="">Select level</option>
+                    <option>Diploma</option>
+                    <option>UG</option>
+                    <option>PG</option>
+                    <option>Research / PhD</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="institution">College Type</label>
+                <select id="institution" required>
+                    <option value="">Select college type</option>
+                    <option>Government</option>
+                    <option>Government-aided</option>
+                    <option>Private</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="teamSize">Team Size</label>
+                <select id="teamSize" required>
+                    <option value="">Select team size</option>
+                    <option>Individual</option>
+                    <option>2–4 Students</option>
+                    <option>5–8 Students</option>
+                    <option>9+ Students</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="amount">Funding Required (₹)</label>
+                <input id="amount" type="number" min="0"
+                max="100000000" required placeholder="e.g. 25000">
+            </div>
+
+            <div>
+                <label for="purpose">Funding Purpose</label>
+                <select id="purpose" required>
+                    <option value="">Select purpose</option>
+                    <option>Prototype Components</option>
+                    <option>Software / Cloud Services</option>
+                    <option>Research and Testing</option>
+                    <option>Travel / Competition</option>
+                    <option>Startup Development</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="full">
+                <label for="stage">Project Stage</label>
+                <select id="stage" required>
+                    <option value="">Select project stage</option>
+                    <option>Idea Only</option>
+                    <option>Planning / Design</option>
+                    <option>Prototype in Progress</option>
+                    <option>Working Prototype</option>
+                    <option>Ready for Demonstration</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="submit-btn" type="submit">
+            Find Funding Opportunities ↗
+        </button>
+
+        <p class="small">
+            This is a frontend demonstration. Your form details are not
+            submitted to a server.
+        </p>
+    </form>
+</section>
+
+<section class="card">
+    <h3>💡 Funding Opportunities</h3>
+
+    <article class="opportunity">
+        <h4>Institution Innovation Council (IIC)</h4>
+        <p>
+            Ask your college innovation cell about prototype support,
+            mentoring, internal funding and student competitions.
+        </p>
+        <a href="https://iic.mic.gov.in/"
+           target="_blank" rel="noopener noreferrer">
+            Official IIC Website ↗
+        </a>
+    </article>
+
+    <article class="opportunity">
+        <h4>Startup India</h4>
+        <p>
+            Explore startup resources, incubator connections and
+            programmes for eligible startup ventures.
+        </p>
+        <a href="https://www.startupindia.gov.in/"
+           target="_blank" rel="noopener noreferrer">
+            Official Website ↗
+        </a>
+    </article>
+
+    <article class="opportunity">
+        <h4>AICTE</h4>
+        <p>
+            Check official announcements about technical education,
+            innovation initiatives and student programmes.
+        </p>
+        <a href="https://www.aicte-india.org/"
+           target="_blank" rel="noopener noreferrer">
+            Official AICTE Website ↗
+        </a>
+    </article>
+
+    <article class="opportunity">
+        <h4>Ministry of Education Innovation Cell</h4>
+        <p>
+            Explore current innovation challenges and student
+            innovation programmes.
+        </p>
+        <a href="https://mic.gov.in/"
+           target="_blank" rel="noopener noreferrer">
+            Official Website ↗
+        </a>
+    </article>
+
+    <article class="opportunity">
+        <h4>ANRF — Research Opportunities</h4>
+        <p>
+            Explore research funding calls with your faculty guide.
+            Many programmes require an eligible institution or researcher.
+        </p>
+        <a href="https://anrf.gov.in/"
+           target="_blank" rel="noopener noreferrer">
+            Official ANRF Website ↗
+        </a>
+    </article>
+
+    <article class="opportunity">
+        <h4>StartupTN</h4>
+        <p>
+            Explore Tamil Nadu's startup ecosystem, incubators and
+            currently announced support opportunities.
+        </p>
+        <a href="https://www.startuptn.in/"
+           target="_blank" rel="noopener noreferrer">
+            Official StartupTN Website ↗
+        </a>
+    </article>
+
+    <div class="notice">
+        <strong>Important:</strong> These links are starting points,
+        not a guarantee of funding. Verify current eligibility,
+        application dates and programme conditions on the official website.
+    </div>
+</section>
+
+</div>
+
+<section class="card hidden" id="results" aria-live="polite">
+    <h3>🎯 Suggested Funding Starting Points</h3>
+    <p id="summary" class="small"></p>
+    <div id="matched"></div>
+
+    <div class="notice">
+        This demo matches project categories to relevant websites.
+        It does not verify eligibility, confirm live deadlines,
+        submit applications or guarantee funding.
+    </div>
+</section>
+
+</main>
+
+<footer>
+    SchemeSense AI · Student Project Prototype
+</footer>
+
+<script>
+const fundingSources = [
+    {
+        title: "College Innovation Cell / IIC",
+        description: "Ask about student project grants, prototype support, mentoring and competitions.",
+        url: "https://iic.mic.gov.in/",
+        categories: ["software", "ai", "cloud", "cyber", "iot", "research", "social", "startup", "other"]
+    },
+    {
+        title: "StartupTN",
+        description: "Explore Tamil Nadu startup programmes, incubators and support for eligible ideas or ventures.",
+        url: "https://www.startuptn.in/",
+        categories: ["software", "ai", "cloud", "cyber", "iot", "social", "startup", "other"]
+    },
+    {
+        title: "Startup India",
+        description: "Explore startup resources and incubator connections. Some programmes are for eligible startups rather than student projects.",
+        url: "https://www.startupindia.gov.in/",
+        categories: ["software", "ai", "cloud", "cyber", "iot", "social", "startup", "other"]
+    },
+    {
+        title: "AICTE",
+        description: "Check current technical education initiatives and innovation announcements.",
+        url: "https://www.aicte-india.org/",
+        categories: ["software", "ai", "cloud", "cyber", "iot", "research", "other"]
+    },
+    {
+        title: "Ministry of Education Innovation Cell",
+        description: "Explore current innovation challenges and student programmes.",
+        url: "https://mic.gov.in/",
+        categories: ["software", "ai", "cloud", "cyber", "iot", "research", "social", "other"]
+    },
+    {
+        title: "ANRF Research Opportunities",
+        description: "Explore research calls with a faculty guide. Many calls require institutional or researcher participation.",
+        url: "https://anrf.gov.in/",
+        categories: ["ai", "iot", "research", "social", "other"]
+    }
+];
+
+document.getElementById("fundingForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const projectName = document.getElementById("projectName").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const category = document.getElementById("category").value;
+    const level = document.getElementById("level").value;
+    const amount = Number(document.getElementById("amount").value);
+    const purpose = document.getElementById("purpose").value;
+    const stage = document.getElementById("stage").value;
+
+    if (!projectName || !description || !category || !level ||
+        !purpose || !stage || !Number.isFinite(amount) || amount < 0) {
+        alert("Please complete all required fields correctly.");
+        return;
+    }
+
+    let matches = fundingSources.filter(function(source) {
+        return source.categories.includes(category);
+    });
+
+    if (description.toLowerCase().includes("research") ||
+        purpose === "Research and Testing") {
+        const research = fundingSources.find(function(source) {
+            return source.title === "ANRF Research Opportunities";
+        });
+
+        if (research && !matches.includes(research)) {
+            matches.push(research);
+        }
+    }
+
+    document.getElementById("summary").textContent =
+        "Project: " + projectName +
+        " | Category: " + document.querySelector("#category option:checked").textContent +
+        " | Funding requested: ₹" + amount.toLocaleString("en-IN") +
+        " | Education: " + level +
+        " | Stage: " + stage;
+
+    document.getElementById("matched").innerHTML = matches.map(function(source) {
+        return '<article class="opportunity">' +
+            '<h4>' + escapeHTML(source.title) + '</h4>' +
+            '<p>' + escapeHTML(source.description) + '</p>' +
+            '<a href="' + source.url + '" target="_blank" rel="noopener noreferrer">' +
+            'Explore Official Website ↗</a>' +
+            '</article>';
+    }).join("");
+
+    const results = document.getElementById("results");
+    results.classList.remove("hidden");
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, function(character) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[character];
+    });
+}
+</script>
+
+</body>
+</html>

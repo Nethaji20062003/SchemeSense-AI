@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community-Based Scholarships | SchemeSense AI</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fc;
+    color: #1e293b;
+}
+
+header {
+    background: #312e81;
+    color: white;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #c4b5fd;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #c4b5fd;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+.hero {
+    background: linear-gradient(120deg, #312e81, #7c3aed);
+    color: white;
+    padding: 50px 7%;
+}
+
+.hero h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 750px;
+    line-height: 1.8;
+    color: #ede9fe;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px #0f172a0b;
+}
+
+h2 {
+    color: #4338ca;
+    margin-bottom: 15px;
+}
+
+.intro {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin: 16px 0 8px;
+}
+
+input, select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background: white;
+}
+
+input:focus, select:focus {
+    outline: 2px solid #c4b5fd;
+    border-color: #7c3aed;
+}
+
+.primary, .btn {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    background: #6d28d9;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.primary {
+    width: 100%;
+    font-size: 16px;
+}
+
+.btn.secondary {
+    background: #0f766e;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 23px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    box-shadow: 0 4px 14px #0f172a08;
+}
+
+.card h3 {
+    color: #4338ca;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+.card p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.tag {
+    display: inline-block;
+    background: #ede9fe;
+    color: #5b21b6;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#resultsSection, #message {
+    display: none;
+}
+
+.note {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 18px;
+}
+
+footer {
+    text-align: center;
+    background: #1e1b4b;
+    color: #ddd6fe;
+    padding: 22px;
+    line-height: 1.8;
+}
+
+@media(max-width: 600px) {
+    .hero { padding: 35px 5%; }
+    main { padding: 25px 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Scheme<span>Sense</span> AI</div>
+    <a href="index.html">← Back to Dashboard</a>
+</header>
+
+<section class="hero">
+    <h1>Community-Based Scholarships</h1>
+    <p>
+        Discover scholarship opportunities that may be relevant
+        to students based on their education level and eligibility.
+        Explore official government scholarship portals.
+    </p>
+</section>
+
+<main>
+
+<section class="panel">
+    <h2>Find Scholarship Opportunities</h2>
+
+    <p class="intro">
+        Enter your details to discover scholarship programmes
+        worth checking. Final eligibility depends on official rules.
+    </p>
+
+    <form id="scholarshipForm">
+
+        <label for="age">Student Age</label>
+        <input type="number" id="age" min="1" max="100"
+               placeholder="Enter age" required>
+
+        <label for="state">State</label>
+        <select id="state" required>
+            <option value="">Select state</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Other">Other State / Union Territory</option>
+        </select>
+
+        <label for="level">Education Level</label>
+        <select id="level" required>
+            <option value="">Select education level</option>
+            <option value="school">School</option>
+            <option value="college">College / Undergraduate</option>
+            <option value="postgraduate">Postgraduate</option>
+            <option value="research">Research / PhD</option>
+        </select>
+
+        <label for="category">Community / Scholarship Category</label>
+        <select id="category" required>
+            <option value="">Select category</option>
+            <option value="sc">SC</option>
+            <option value="st">ST</option>
+            <option value="obc">OBC / BC / MBC</option>
+            <option value="minority">Minority community</option>
+            <option value="general">General / Other</option>
+            <option value="unknown">Not sure</option>
+        </select>
+
+        <label for="income">Annual Family Income (optional)</label>
+        <select id="income">
+            <option value="unknown">Prefer not to say / Not sure</option>
+            <option value="below1">Below ₹1 lakh</option>
+            <option value="1to2">₹1 lakh to ₹2.5 lakh</option>
+            <option value="2to3">₹2.5 lakh to ₹3 lakh</option>
+            <option value="above3">Above ₹3 lakh</option>
+        </select>
+
+        <button class="primary" type="submit">
+            Find Scholarships →
+        </button>
+    </form>
+
+    <p class="note">
+        Your answers are used only by this page to filter its sample
+        recommendations. They are not sent to a government database.
+    </p>
+</section>
+
+<p id="message" class="panel" role="status"></p>
+
+<section id="resultsSection">
+    <h2>Recommended Scholarship Portals</h2>
+    <p id="summary" class="note"></p>
+    <div id="results" class="grid"></div>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2026 SchemeSense AI</p>
+    <p>Helping students explore educational opportunities.</p>
+</footer>
+
+<script>
+const scholarships = [
+    {
+        id: "national",
+        title: "National Scholarship Portal",
+        category: "Central Government",
+        levels: ["school", "college", "postgraduate"],
+        communities: ["sc", "st", "obc", "minority", "general", "unknown"],
+        description:
+            "Explore central and other listed scholarship schemes. " +
+            "Availability depends on the scheme, course, category and eligibility rules.",
+        url: "https://scholarships.gov.in/"
+    },
+    {
+        id: "tamilnadu",
+        title: "Tamil Nadu e-District / State Services",
+        category: "Tamil Nadu",
+        levels: ["school", "college", "postgraduate", "research"],
+        communities: ["sc", "st", "obc", "minority", "general", "unknown"],
+        tamilNaduOnly: true,
+        description:
+            "Explore Tamil Nadu government services and look for relevant " +
+            "education assistance through the responsible department.",
+        url: "https://www.tn.gov.in/"
+    },
+    {
+        id: "sc",
+        title: "SC Student Scholarship Information",
+        category: "SC",
+        levels: ["school", "college", "postgraduate", "research"],
+        communities: ["sc", "unknown"],
+        description:
+            "Explore official information about SC student scholarships. " +
+            "Course level, income, institution and other rules may apply.",
+        url: "https://scholarships.gov.in/"
+    },
+    {
+        id: "st",
+        title: "ST Student Scholarship Information",
+        category: "ST",
+        levels: ["school", "college", "postgraduate", "research"],
+        communities: ["st", "unknown"],
+        description:
+            "Explore scholarship opportunities for eligible ST students. " +
+            "Check current scheme rules and application dates.",
+        url: "https://scholarships.gov.in/"
+    },
+    {
+        id: "obc",
+        title: "OBC / BC / MBC Scholarship Information",
+        category: "Community-based assistance",
+        levels: ["school", "college", "postgraduate"],
+        communities: ["obc", "unknown"],
+        description:
+            "Look for applicable community-based educational assistance. " +
+            "Categories and rules differ across central and state schemes.",
+        url: "https://scholarships.gov.in/"
+    },
+    {
+        id: "minority",
+        title: "Minority Education Assistance",
+        category: "Minority",
+        levels: ["school", "college", "postgraduate"],
+        communities: ["minority", "unknown"],
+        description:
+            "Check current official announcements to see which minority " +
+            "education schemes are available and accepting applications.",
+        url: "https://www.minorityaffairs.gov.in/"
+    },
+    {
+        id: "research",
+        title: "Research Fellowship Information",
+        category: "Research / Higher Education",
+        levels: ["research", "postgraduate"],
+        communities: ["sc", "st", "obc", "minority", "general", "unknown"],
+        description:
+            "Explore official higher education and research fellowship " +
+            "information. Each fellowship has its own eligibility criteria.",
+        url: "https://www.ugc.gov.in/"
+    }
+];
+
+const form = document.getElementById("scholarshipForm");
+const results = document.getElementById("results");
+const section = document.getElementById("resultsSection");
+const message = document.getElementById("message");
+const summary = document.getElementById("summary");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const age = Number(document.getElementById("age").value);
+    const state = document.getElementById("state").value;
+    const level = document.getElementById("level").value;
+    const category = document.getElementById("category").value;
+    const income = document.getElementById("income").value;
+
+    if (!Number.isInteger(age) || age < 1 || age > 100) {
+        message.style.display = "block";
+        message.textContent = "Please enter a valid age.";
+        section.style.display = "none";
+        return;
+    }
+
+    const matches = scholarships.filter(function(item) {
+        if (!item.levels.includes(level)) return false;
+
+        if (item.tamilNaduOnly && state !== "Tamil Nadu") {
+            return false;
+        }
+
+        if (!item.communities.includes(category)) {
+            return false;
+        }
+
+        return true;
+    });
+
+    results.replaceChildren();
+    message.style.display = "none";
+    section.style.display = "block";
+
+    summary.textContent =
+        "Age: " + age +
+        " | State: " + state +
+        " | Education: " + level +
+        " | Category: " + category +
+        ". These are suggestions, not confirmed eligibility.";
+
+    if (matches.length === 0) {
+        message.style.display = "block";
+        message.textContent =
+            "No matching sample recommendations. Please check the official scholarship portals.";
+        return;
+    }
+
+    matches.forEach(function(item) {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = item.category;
+
+        const title = document.createElement("h3");
+        title.textContent = item.title;
+
+        const description = document.createElement("p");
+        description.textContent = item.description;
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const details = document.createElement("a");
+        details.className = "btn";
+        details.href = "community_scholarship_details.html#" + item.id;
+        details.textContent = "View Details";
+
+        const official = document.createElement("a");
+        official.className = "btn secondary";
+        official.href = item.url;
+        official.target = "_blank";
+        official.rel = "noopener noreferrer";
+        official.textContent = "Official Website ↗";
+
+        actions.append(details, official);
+        card.append(tag, title, description, actions);
+        results.appendChild(card);
+    });
+
+    section.scrollIntoView({ behavior: "smooth" });
+});
+</script>
+
+</body>
+</html>

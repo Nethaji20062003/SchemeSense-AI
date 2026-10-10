@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single-Parent Student Support | SchemeSense AI</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f7fc;color:#1e293b}
+header{background:#134e4a;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:bold}
+.logo span{color:#99f6e4}
+header a{color:white;text-decoration:none;border:1px solid #99f6e4;padding:10px 14px;border-radius:8px}
+.hero{background:linear-gradient(120deg,#134e4a,#0f766e);color:white;padding:48px 7%}
+.hero h1{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
+.hero p{max-width:750px;line-height:1.8;color:#ccfbf1}
+main{max-width:1100px;margin:auto;padding:35px 20px}
+.panel{background:white;padding:25px;border-radius:14px;margin-bottom:25px;box-shadow:0 5px 20px #0f172a0b}
+h2{color:#115e59;margin-bottom:15px}
+.intro{color:#64748b;line-height:1.7;margin-bottom:18px}
+label{display:block;font-weight:bold;margin:16px 0 8px}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;background:white}
+input:focus,select:focus{outline:2px solid #99f6e4;border-color:#0f766e}
+.primary,.btn{display:inline-block;border:0;border-radius:8px;padding:12px 15px;background:#0f766e;color:white;text-decoration:none;cursor:pointer;font-size:14px;margin-top:15px}
+.primary{width:100%;font-size:16px}
+.btn.secondary{background:#2563eb}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:white;padding:23px;border:1px solid #e2e8f0;border-radius:13px;box-shadow:0 4px 14px #0f172a08}
+.card h3{color:#115e59;line-height:1.5;margin:12px 0}
+.card p{color:#64748b;line-height:1.7}
+.tag{display:inline-block;background:#ccfbf1;color:#115e59;padding:6px 9px;border-radius:6px;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+#resultsSection,#message{display:none}
+.note{color:#64748b;font-size:13px;line-height:1.7;margin-top:18px}
+.info{background:#ecfdf5;border-left:5px solid #0f766e;padding:20px;border-radius:8px;line-height:1.8;margin-top:25px}
+footer{text-align:center;background:#042f2e;color:#ccfbf1;padding:22px;line-height:1.8}
+@media(max-width:600px){.hero{padding:35px 5%}main{padding:25px 14px}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">Scheme<span>Sense</span> AI</div>
+  <a href="index.html">← Back to Dashboard</a>
+</header>
+
+<section class="hero">
+  <h1>Single-Parent Student Support</h1>
+  <p>
+    Explore education assistance and scholarship resources for students
+    whose families are supported by one parent or guardian.
+    Find official portals to check available support.
+  </p>
+</section>
+
+<main>
+<section class="panel">
+  <h2>Find Education Support</h2>
+  <p class="intro">
+    Enter the student's details to explore relevant scholarship
+    resources. Some schemes may consider family income, education
+    level, academic performance or special circumstances.
+  </p>
+
+  <form id="supportForm">
+    <label for="age">Student Age</label>
+    <input id="age" type="number" min="1" max="100"
+           placeholder="Enter age" required>
+
+    <label for="state">State</label>
+    <select id="state" required>
+      <option value="">Select state</option>
+      <option value="Tamil Nadu">Tamil Nadu</option>
+      <option value="Other">Other State / Union Territory</option>
+    </select>
+
+    <label for="level">Education Level</label>
+    <select id="level" required>
+      <option value="">Select education level</option>
+      <option value="school">School</option>
+      <option value="college">College / Undergraduate</option>
+      <option value="postgraduate">Postgraduate</option>
+      <option value="research">Research / PhD</option>
+    </select>
+
+    <label for="situation">Family Situation</label>
+    <select id="situation" required>
+      <option value="">Select family situation</option>
+      <option value="single">One parent is the primary caregiver</option>
+      <option value="widow">One parent has passed away</option>
+      <option value="guardian">A guardian supports the student</option>
+      <option value="other">Other family circumstances</option>
+      <option value="prefer">Prefer not to say</option>
+    </select>
+
+    <label for="income">Annual Family Income (optional)</label>
+    <select id="income">
+      <option value="unknown">Not sure / Prefer not to say</option>
+      <option value="below1">Below ₹1 lakh</option>
+      <option value="1to2">₹1 lakh to ₹2.5 lakh</option>
+      <option value="2to3">₹2.5 lakh to ₹3 lakh</option>
+      <option value="above3">Above ₹3 lakh</option>
+    </select>
+
+    <button class="primary" type="submit">Find Support →</button>
+  </form>
+
+  <p class="note">
+    This page processes the selections in your browser. It does not
+    submit personal information to a government department.
+  </p>
+</section>
+
+<p id="message" class="panel" role="status"></p>
+
+<section id="resultsSection">
+  <h2>Support Options</h2>
+  <p id="summary" class="note"></p>
+  <div id="results" class="grid"></div>
+</section>
+
+<div class="info">
+  <h3>📋 Documents that may be requested</h3>
+  <p>
+    Depending on the scheme: student ID, school or college certificate,
+    income certificate, residence proof, bank details and relevant
+    family documents. Submit documents only through verified official
+    channels when required.
+  </p>
+</div>
+</main>
+
+<footer>
+  <p>© 2026 SchemeSense AI</p>
+  <p>Helping students discover education-support opportunities.</p>
+</footer>
+
+<script>
+const supportOptions = [
+  {
+    id: "national",
+    title: "National Scholarship Portal",
+    category: "Scholarships",
+    levels: ["school", "college", "postgraduate"],
+    description:
+      "Explore scholarship schemes listed on the national portal. " +
+      "Check each scheme's eligibility, income criteria and application dates.",
+    url: "https://scholarships.gov.in/"
+  },
+  {
+    id: "tamilnadu",
+    title: "Tamil Nadu Government Education Support",
+    category: "State Services",
+    levels: ["school", "college", "postgraduate", "research"],
+    tamilNaduOnly: true,
+    description:
+      "Explore Tamil Nadu government services and locate the relevant " +
+      "department for education assistance and student welfare.",
+    url: "https://www.tn.gov.in/"
+  },
+  {
+    id: "school",
+    title: "School Education Assistance",
+    category: "School Students",
+    levels: ["school"],
+    description:
+      "Check applicable school-level scholarships and assistance. " +
+      "Eligibility may depend on the scheme, income and school details.",
+    url: "https://scholarships.gov.in/"
+  },
+  {
+    id: "higher",
+    title: "Higher Education Scholarships",
+    category: "College Students",
+    levels: ["college", "postgraduate"],
+    description:
+      "Explore higher-education scholarships and verify academic, " +
+      "income and course requirements for each available programme.",
+    url: "https://scholarships.gov.in/"
+  },
+  {
+    id: "ugc",
+    title: "Higher Education & Fellowship Information",
+    category: "Higher Education",
+    levels: ["postgraduate", "research"],
+    description:
+      "Explore official higher-education and fellowship information. " +
+      "Each programme has its own rules and application process.",
+    url: "https://www.ugc.gov.in/"
+  }
+];
+
+const form = document.getElementById("supportForm");
+const message = document.getElementById("message");
+const section = document.getElementById("resultsSection");
+const results = document.getElementById("results");
+const summary = document.getElementById("summary");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const age = Number(document.getElementById("age").value);
+  const state = document.getElementById("state").value;
+  const level = document.getElementById("level").value;
+  const situation = document.getElementById("situation").value;
+  const income = document.getElementById("income").value;
+
+  if (!Number.isInteger(age) || age < 1 || age > 100) {
+    message.style.display = "block";
+    message.textContent = "Please enter a valid student age.";
+    section.style.display = "none";
+    return;
+  }
+
+  const matches = supportOptions.filter(function(item) {
+    if (!item.levels.includes(level)) return false;
+
+    if (item.tamilNaduOnly && state !== "Tamil Nadu") {
+      return false;
+    }
+
+    return true;
+  });
+
+  results.replaceChildren();
+  message.style.display = "none";
+  section.style.display = "block";
+
+  summary.textContent =
+    "Age: " + age +
+    " | State: " + state +
+    " | Education: " + level +
+    ". These are general support resources, not confirmed eligibility.";
+
+  matches.forEach(function(item) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = item.category;
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    const description = document.createElement("p");
+    description.textContent = item.description;
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const details = document.createElement("a");
+    details.className = "btn";
+    details.href = "single_parent_details.html#" + item.id;
+    details.textContent = "View Details";
+
+    const official = document.createElement("a");
+    official.className = "btn secondary";
+    official.href = item.url;
+    official.target = "_blank";
+    official.rel = "noopener noreferrer";
+    official.textContent = "Official Website ↗";
+
+    actions.append(details, official);
+    card.append(tag, title, description, actions);
+    results.appendChild(card);
+  });
+
+  section.scrollIntoView({ behavior: "smooth" });
+});
+</script>
+</body>
+</html>

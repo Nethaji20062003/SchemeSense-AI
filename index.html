@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchemeSense AI | Dashboard</title>
+<style>
+:root{--navy:#14213d;--blue:#2563eb;--text:#1f2937;--muted:#64748b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#eef4ff,#f8fbff);color:var(--text);min-height:100vh}
+header{background:linear-gradient(120deg,#14213d,#234e91);color:white;padding:24px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;box-shadow:0 4px 18px #14213d22}
+header h1{margin:0;font-size:26px}
+header p{margin:7px 0 0;color:#dbeafe;font-size:14px}
+.logout{color:white;text-decoration:none;border:1px solid #ffffff88;padding:10px 15px;border-radius:9px}
+main{max-width:1150px;margin:35px auto;padding:0 20px}
+.welcome{margin-bottom:25px}
+.welcome h2{color:var(--navy);margin-bottom:8px}
+.welcome p{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:white;border:1px solid #e0e8f5;border-radius:17px;padding:24px;box-shadow:0 8px 24px #19365c0b;display:flex;flex-direction:column;min-height:235px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px #19365c18}
+.icon{font-size:35px;margin-bottom:14px}
+.card h3{color:var(--navy);margin:0 0 10px;font-size:19px}
+.card p{color:var(--muted);font-size:14px;line-height:1.6;flex:1}
+.card button{background:var(--blue);color:white;border:0;padding:12px 14px;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px}
+.card button:hover{background:#1d4ed8}
+.card button:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+.note{background:#fff8e6;border-left:4px solid #e6a817;padding:14px 16px;border-radius:8px;color:#66521c;line-height:1.6;font-size:13px;margin-top:25px}
+footer{text-align:center;color:#64748b;font-size:13px;padding:25px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){header h1{font-size:22px}.grid{grid-template-columns:1fr}main{margin-top:24px;padding:0 15px}.card{min-height:210px}}
+</style>
+</head>
+<body>
+<header>
+ <div>
+  <h1>🎓 SchemeSense AI</h1>
+  <p>Discover education support and welfare schemes</p>
+ </div>
+ <a class="logout" href="login.html" onclick="logout()">Log out</a>
+</header>
+
+<main>
+ <section class="welcome">
+  <h2>Welcome to your Dashboard 👋</h2>
+  <p>Choose a category to explore relevant scheme information. Recommendations are only starting points; always verify eligibility and deadlines on the official portal.</p>
+ </section>
+
+ <section class="grid">
+  <article class="card">
+   <div class="icon">🏫</div>
+   <h3>School Scholarships</h3>
+   <p>Explore scholarship information for school students based on class, school type, income and other details.</p>
+   <button type="button" onclick="openPage('school_scholarships.html')">Continue →</button>
+  </article>
+
+  <article class="card">
+   <div class="icon">🎓</div>
+   <h3>College Scholarships</h3>
+   <p>Find possible scholarship leads for Diploma, UG, PG and research students using education and family details.</p>
+   <button type="button" onclick="openPage('college_scholarships.html')">Continue →</button>
+  </article>
+
+  <article class="card">
+   <div class="icon">💡</div>
+   <h3>Student Project Funding</h3>
+   <p>Explore information about possible support for student innovation, projects and entrepreneurship.</p>
+   <button type="button" onclick="showMessage('Student Project Funding')">Continue →</button>
+  </article>
+
+  <article class="card">
+   <div class="icon">👵</div>
+   <h3>Senior Citizen Welfare</h3>
+   <p>Explore general information about welfare schemes and support for senior citizens.</p>
+   <button type="button" onclick="showMessage('Senior Citizen Welfare')">Continue →</button>
+  </article>
+
+  <article class="card">
+   <div class="icon">🤝</div>
+   <h3>Community-Based Scholarships</h3>
+   <p>Review scholarship information that may depend on category and the scheme's official requirements.</p>
+   <button type="button" onclick="showMessage('Community-Based Scholarships')">Continue →</button>
+  </article>
+
+  <article class="card">
+   <div class="icon">💙</div>
+   <h3>Single-Parent Student Support</h3>
+   <p>Explore possible education support information for students from single-parent families.</p>
+   <button type="button" onclick="showMessage('Single-Parent Student Support')">Continue →</button>
+  </article>
+ </section>
+
+ <div class="note">
+  <strong>Important:</strong> SchemeSense AI is a student project prototype. It does not confirm eligibility, submit applications, or guarantee scholarship approval. Verify all conditions, documents and deadlines through official sources.
+ </div>
+</main>
+
+<footer>© SchemeSense AI · Student project prototype</footer>
+
+<script>
+function logout(){
+  sessionStorage.removeItem("schemeDemoLoggedIn");
+  sessionStorage.removeItem("schemeDemoPhone");
+}
+
+function openPage(page){
+  window.location.href = new URL(page, window.location.href).href;
+}
+
+function showMessage(category){
+  alert(category + ' information will be added in a future update. Please check official government portals for current details.');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>School Scholarship Finder | SchemeSense AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eaf2ff, #f8faff);
+            color: #243047;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #173b70;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        .back-button {
+            background: white;
+            color: #173b70;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #e3edff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            font-size: 30px;
+            color: #173b70;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #5d687a;
+            line-height: 1.7;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(30, 60, 100, 0.10);
+        }
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-weight: bold;
+            color: #263b59;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            color: #243047;
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #8bb5ff;
+            border-color: #346fc0;
+        }
+
+        select:disabled {
+            background: #f1f5f9;
+            cursor: not-allowed;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 15px;
+            background: #245eb5;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-button:hover {
+            background: #173b70;
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: #e8eef8;
+            color: #173b70;
+            border: none;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .notice {
+            background: #fff8e6;
+            border-left: 4px solid #e6a817;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 22px;
+            line-height: 1.7;
+            font-size: 13px;
+            color: #66521c;
+        }
+
+        #result {
+            display: none;
+            background: #e9f8ef;
+            border: 1px solid #9bd8ae;
+            padding: 22px;
+            margin-top: 24px;
+            border-radius: 10px;
+            line-height: 1.9;
+            overflow-wrap: anywhere;
+        }
+
+        #result h3 {
+            color: #176638;
+            margin-bottom: 12px;
+        }
+
+        .result-note {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+
+        .scheme-section {
+            margin-top: 22px;
+        }
+
+        .scheme-section h3 {
+            color: #173b70;
+            margin-bottom: 12px;
+        }
+
+        .scheme-card {
+            background: #ffffff;
+            border: 1px solid #d8e3f3;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .scheme-card h4 {
+            color: #173b70;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .scheme-card p {
+            margin: 7px 0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .scheme-card a {
+            display: inline-block;
+            margin-top: 8px;
+            color: #1d4ed8;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .match-label {
+            display: inline-block;
+            background: #fff3cd;
+            color: #765400;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px 5%;
+            }
+
+            header h1 {
+                font-size: 21px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 14px;
+            }
+
+            .intro h2 {
+                font-size: 25px;
+            }
+
+            .form-card {
+                padding: 22px 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 SchemeSense AI</h1>
+    <a class="back-button" href="index.html">← Dashboard</a>
+</header>
+
+<main class="container">
+
+    <section class="intro">
+        <h2>School Scholarship Finder 🎓</h2>
+
+        <p>
+            Explore scholarship opportunities that may be relevant to
+            your school education. Enter your details below to get started.
+        </p>
+    </section>
+
+    <section class="form-card">
+
+        <form id="scholarshipForm">
+
+            <!-- STATE -->
+            <div class="form-group">
+                <label for="state">State / Union Territory *</label>
+
+                <select id="state" name="state" required>
+                    <option value="">Loading states...</option>
+                </select>
+            </div>
+
+            <!-- DISTRICT -->
+            <div class="form-group">
+                <label for="district">District *</label>
+
+                <select id="district" name="district" required disabled>
+                    <option value="">First select your State / UT</option>
+                </select>
+            </div>
+
+            <!-- CLASS -->
+            <div class="form-group">
+                <label for="classLevel">Current Class *</label>
+
+                <select id="classLevel" name="classLevel" required>
+                    <option value="">Select your class</option>
+                    <option value="Class 1–5">Class 1–5</option>
+                    <option value="Class 6–8">Class 6–8</option>
+                    <option value="Class 9–10">Class 9–10</option>
+                    <option value="Class 11–12">Class 11–12</option>
+                </select>
+            </div>
+
+            <!-- SCHOOL TYPE -->
+            <div class="form-group">
+                <label for="schoolType">School Type *</label>
+
+                <select id="schoolType" name="schoolType" required>
+                    <option value="">Select school type</option>
+                    <option value="Government School">Government School</option>
+                    <option value="Government-Aided School">
+                        Government-Aided School
+                    </option>
+                    <option value="Private School">Private School</option>
+                </select>
+            </div>
+
+            <!-- FAMILY INCOME -->
+            <div class="form-group">
+                <label for="income">Annual Family Income Range *</label>
+
+                <select id="income" name="income" required>
+                    <option value="">Select income range</option>
+                    <option value="Below ₹1 lakh">Below ₹1 lakh</option>
+                    <option value="₹1 lakh – ₹2.5 lakh">
+                        ₹1 lakh – ₹2.5 lakh
+                    </option>
+                    <option value="₹2.5 lakh – ₹5 lakh">
+                        ₹2.5 lakh – ₹5 lakh
+                    </option>
+                    <option value="Above ₹5 lakh">Above ₹5 lakh</option>
+                    <option value="Not sure">Not sure</option>
+                </select>
+            </div>
+
+            <!-- COMMUNITY -->
+            <div class="form-group">
+                <label for="community">
+                    Community Category (Optional)
+                </label>
+
+                <select id="community" name="community">
+                    <option value="">Prefer not to say / Skip</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                    <option value="BC">BC</option>
+                    <option value="MBC">MBC</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-button">
+                🔍 Find Scholarship Opportunities
+            </button>
+
+            <button type="reset" class="reset-button">
+                Clear Form
+            </button>
+
+        </form>
+
+        <!-- RESULT -->
+        <div id="result" role="status" aria-live="polite"></div>
+
+        <!-- DISCLAIMER -->
+        <div class="notice">
+            <strong>⚠️ Important Notice</strong><br>
+
+            This is an early-stage prototype. Your information is used
+            in this page to display your selected details. It does not
+            yet search a verified scholarship database or determine
+            eligibility. Always verify scholarship rules through official
+            government sources before applying.
+            <br><br>
+            Do not enter names, phone numbers, Aadhaar numbers, bank details,
+            passwords, or other sensitive personal information.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 SchemeSense AI | Scholarship Discovery Prototype
+</footer>
+
+<script>
+    /*
+      District data below is a starter dataset, not an authoritative,
+      fully up-to-date government directory. District names may change.
+    */
+
+    const stateDistricts = {
+
+        "Andhra Pradesh": [
+            "Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu",
+            "Annamayya", "Bapatla", "Chittoor",
+            "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru",
+            "Guntur", "Kakinada", "Krishna", "Kurnool", "Manyam",
+            "Nandyal", "NTR", "Palnadu", "Parvathipuram Manyam",
+            "Prakasam", "Sri Potti Sriramulu Nellore",
+            "Sri Sathya Sai", "Srikakulam", "Tirupati",
+            "Visakhapatnam", "Vizianagaram", "West Godavari",
+            "YSR Kadapa"
+        ],
+
+        "Arunachal Pradesh": [
+            "Anjaw", "Changlang", "Dibang Valley", "East Kameng",
+            "East Siang", "Itanagar Capital Complex", "Kamle",
+            "Keyi Panyor", "Kra Daadi", "Kurung Kumey",
+            "Lepa Rada", "Lohit", "Longding", "Lower Dibang Valley",
+            "Lower Siang", "Lower Subansiri", "Namsai",
+            "Pakke Kessang", "Papum Pare", "Shi Yomi", "Siang",
+            "Tawang", "Tirap", "Upper Siang", "Upper Subansiri",
+            "West Kameng", "West Siang"
+        ],
+
+        "Assam": [
+            "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar",
+            "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri",
+            "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat",
+            "Hailakandi", "Hojai", "Jorhat", "Kamrup",
+            "Kamrup Metropolitan", "Karbi Anglong", "Kokrajhar",
+            "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari",
+            "Sivasagar", "Sonitpur", "South Salmara-Mankachar",
+            "Sribhumi", "Tamulpur", "Tinsukia", "Udalguri",
+            "West Karbi Anglong"
+        ],
+
+        "Bihar": [
+            "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai",
+            "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga",
+            "East Champaran", "Gaya", "Gopalganj", "Jamui",
+            "Jehanabad", "Kaimur", "Katihar", "Khagaria",
+            "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani",
+            "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna",
+            "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran",
+            "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul",
+            "Vaishali", "West Champaran"
+        ],
+
+        "Chhattisgarh": [
+            "Balod", "Baloda Bazar", "Balrampur-Ramanujganj",
+            "Bastar", "Bemetara", "Bijapur", "Bilaspur",
+            "Dantewada", "Dhamtari", "Durg", "Gariaband",
+            "Gaurela-Pendra-Marwahi", "Janjgir-Champa", "Jashpur",
+            "Kabirdham", "Kanker", "Khairagarh-Chhuikhadan-Gandai",
+            "Kondagaon", "Korba", "Korea", "Mahasamund",
+            "Manendragarh-Chirmiri-Bharatpur",
+            "Mohla-Manpur-Ambagarh Chowki", "Mungeli", "Narayanpur",
+            "Raigarh", "Raipur", "Rajnandgaon", "Sakti",
+            "Sarangarh-Bilaigarh", "Sukma", "Surajpur", "Surguja"
+        ],
+
+        "Goa": [
+            "North Goa", "South Goa"
+        ],
+
+        "Gujarat": [
+            "Ahmedabad", "Amreli", "Anand", "Aravalli",
+            "Banaskantha", "Bharuch", "Bhavnagar", "Botad",
+            "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka",
+            "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh",
+            "Kachchh", "Kheda", "Mahisagar", "Mehsana", "Morbi",
+            "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar",
+            "Rajkot", "Sabarkantha", "Surat", "Surendranagar",
+            "Tapi", "Vadodara", "Valsad"
+        ],
+
+        "Haryana": [
+            "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad",
+            "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind",
+            "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh",
+            "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari",
+            "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"
+        ],
+
+        "Himachal Pradesh": [
+            "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur",
+            "Kullu", "Lahaul and Spiti", "Mandi", "Shimla",
+            "Sirmaur", "Solan", "Una"
+        ],
+
+        "Jharkhand": [
+            "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka",
+            "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla",
+            "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar",
+            "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi",
+            "Sahebganj", "Seraikela-Kharsawan", "Simdega",
+            "West Singhbhum"
+        ],
+
+        "Karnataka": [
+            "Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural",
+            "Bengaluru Urban", "Bidar", "Chamarajanagar",
+            "Chikkaballapura", "Chikkamagaluru", "Chitradurga",
+            "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag",
+            "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar",
+            "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara",
+            "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada",
+            "Vijayanagara", "Vijayapura", "Yadgir"
+        ],
+
+        "Kerala": [
+            "Alappuzha", "Ernakulam", "Idukki", "Kannur",
+            "Kasaragod", "Kollam", "Kottayam", "Kozhikode",
+            "Malappuram", "Palakkad", "Pathanamthitta",
+            "Thiruvananthapuram", "Thrissur", "Wayanad"
+        ],
+
+        "Madhya Pradesh": [
+            "Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar",
+            "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal",
+            "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh",
+            "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior",
+            "Harda", "Indore", "Jabalpur", "Jhabua", "Katni",
+            "Khandwa", "Khargone", "Maihar", "Mandla", "Mandsaur",
+            "Mauganj", "Morena", "Narmadapuram", "Narsinghpur",
+            "Neemuch", "Niwari", "Pandhurna", "Panna", "Raisen",
+            "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore",
+            "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri",
+            "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria",
+            "Vidisha"
+        ],
+
+        "Maharashtra": [
+            "Ahilyanagar", "Akola", "Amravati", "Beed", "Bhandara",
+            "Buldhana", "Chandrapur", "Dharashiv", "Dhule",
+            "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna",
+            "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban",
+            "Nagpur", "Nanded", "Nandurbar", "Nashik", "Palghar",
+            "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli",
+            "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha",
+            "Washim", "Yavatmal"
+        ],
+
+        "Manipur": [
+            "Bishnupur", "Chandel", "Churachandpur", "Imphal East",
+            "Imphal West", "Jiribam", "Kakching", "Kamjong",
+            "Kangpokpi", "Noney", "Pherzawl", "Senapati",
+            "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"
+        ],
+
+        "Meghalaya": [
+            "East Garo Hills", "East Jaintia Hills", "East Khasi Hills",
+            "Eastern West Khasi Hills", "North Garo Hills", "Ri Bhoi",
+            "South Garo Hills", "South West Garo Hills",
+            "South West Khasi Hills", "West Garo Hills",
+            "West Jaintia Hills", "West Khasi Hills"
+        ],
+
+        "Mizoram": [
+            "Aizawl", "Champhai", "Hnahthial", "Khawzawl",
+            "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual",
+            "Saiha", "Serchhip"
+        ],
+
+        "Nagaland": [
+            "Chumoukedima", "Dimapur", "Kiphire", "Kohima",
+            "Longleng", "Mokokchung", "Mon", "Niuland", "Noklak",
+            "Peren", "Phek", "Shamator", "Tseminyu", "Tuensang",
+            "Wokha", "Zunheboto"
+        ],
+
+        "Odisha": [
+            "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak",
+            "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati",
+            "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda",
+            "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar",
+            "Khordha", "Koraput", "Malkangiri", "Mayurbhanj",
+            "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada",
+            "Sambalpur", "Subarnapur", "Sundargarh"
+        ],
+
+        "Punjab": [
+            "Amritsar", "Barnala", "Bathinda", "Faridkot",
+            "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur",
+            "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana",
+            "Malerkotla", "Mansa", "Moga", "Pathankot", "Patiala",
+            "Rupnagar", "Sahibzada Ajit Singh Nagar", "Sangrur",
+            "Shaheed Bhagat Singh Nagar", "Sri Muktsar Sahib",
+            "Tarn Taran"
+        ],
+
+        "Rajasthan": [
+            "Ajmer", "Alwar", "Anupgarh", "Balotra", "Banswara",
+            "Baran", "Barmer", "Beawar", "Bharatpur", "Bhilwara",
+            "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa",
+            "Deeg", "Dholpur", "Didwana-Kuchaman", "Dungarpur",
+            "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore",
+            "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota",
+            "Nagaur", "Pali", "Phalodi", "Pratapgarh", "Rajsamand",
+            "Salumbar", "Sawai Madhopur", "Sikar", "Sirohi",
+            "Sri Ganganagar", "Tonk", "Udaipur"
+        ],
+
+        "Sikkim": [
+            "Gangtok", "Gyalshing", "Mangan", "Namchi",
+            "Pakyong", "Soreng"
+        ],
+
+        "Tamil Nadu": [
+            "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore",
+            "Cuddalore", "Dharmapuri", "Dindigul", "Erode",
+            "Kallakurichi", "Kancheepuram", "Kanniyakumari",
+            "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai",
+            "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur",
+            "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem",
+            "Sivaganga", "Tenkasi", "Thanjavur", "Theni",
+            "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
+            "Tirupathur", "Tiruppur", "Tiruvallur",
+            "Tiruvannamalai", "Tiruvarur", "Vellore",
+            "Viluppuram", "Virudhunagar"
+        ],
+
+        "Telangana": [
+            "Adilabad", "Bhadradri Kothagudem", "Hanamkonda",
+            "Hyderabad", "Jagtial", "Jangaon",
+            "Jayashankar Bhupalpally", "Jogulamba Gadwal",
+            "Kamareddy", "Karimnagar", "Khammam",
+            "Kumuram Bheem Asifabad", "Mahabubabad",
+            "Mahabubnagar", "Mancherial", "Medak",
+            "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool",
+            "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad",
+            "Peddapalli", "Rajanna Sircilla", "Rangareddy",
+            "Sangareddy", "Siddipet", "Suryapet", "Vikarabad",
+            "Wanaparthy", "Warangal", "Yadadri Bhuvanagiri"
+        ],
+
+        "Tripura": [
+            "Dhalai", "Gomati", "Khowai", "North Tripura",
+            "Sepahijala", "South Tripura", "Unakoti", "West Tripura"
+        ],
+
+        "Uttar Pradesh": [
+            "Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha",
+            "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich",
+            "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly",
+            "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr",
+            "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah",
+            "Farrukhabad", "Fatehpur", "Firozabad",
+            "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda",
+            "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras",
+            "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat",
+            "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri",
+            "Kushinagar", "Lalitpur", "Lucknow", "Maharajganj",
+            "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut",
+            "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit",
+            "Pratapgarh", "Prayagraj", "Raebareli", "Rampur",
+            "Saharanpur", "Sambhal", "Sant Kabir Nagar",
+            "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar",
+            "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"
+        ],
+
+        "Uttarakhand": [
+            "Almora", "Bageshwar", "Chamoli", "Champawat",
+            "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal",
+            "Pithoragarh", "Rudraprayag", "Tehri Garhwal",
+            "Udham Singh Nagar", "Uttarkashi"
+        ],
+
+        "West Bengal": [
+            "Alipurduar", "Bankura", "Birbhum", "Cooch Behar",
+            "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah",
+            "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata",
+            "Malda", "Murshidabad", "Nadia", "North 24 Parganas",
+            "Paschim Bardhaman", "Paschim Medinipur",
+            "Purba Bardhaman", "Purba Medinipur", "Purulia",
+            "South 24 Parganas", "Uttar Dinajpur"
+        ],
+
+        // Union Territories
+
+        "Andaman and Nicobar Islands": [
+            "Nicobar", "North and Middle Andaman", "South Andaman"
+        ],
+
+        "Chandigarh": [
+            "Chandigarh"
+        ],
+
+        "Dadra and Nagar Haveli and Daman and Diu": [
+            "Dadra and Nagar Haveli", "Daman", "Diu"
+        ],
+
+        "Delhi": [
+            "Central Delhi", "East Delhi", "New Delhi", "North Delhi",
+            "North East Delhi", "North West Delhi", "Shahdara",
+            "South Delhi", "South East Delhi", "South West Delhi",
+            "West Delhi"
+        ],
+
+        "Jammu and Kashmir": [
+            "Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda",
+            "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam",
+            "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban",
+            "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"
+        ],
+
+        "Ladakh": [
+            "Kargil", "Leh"
+        ],
+
+        "Lakshadweep": [
+            "Lakshadweep"
+        ],
+
+        "Puducherry": [
+            "Karaikal", "Mahe", "Puducherry", "Yanam"
+        ]
+    };
+
+
+    // Populate the State / Union Territory dropdown.
+    const stateSelect = document.getElementById("state");
+    const districtSelect = document.getElementById("district");
+
+    stateSelect.innerHTML = '<option value="">Select State / Union Territory</option>';
+
+    Object.keys(stateDistricts)
+        .sort()
+        .forEach(function(stateName) {
+            const option = document.createElement("option");
+
+            option.value = stateName;
+            option.textContent = stateName;
+
+            stateSelect.appendChild(option);
+        });
+
+
+    // Update districts when the selected state changes.
+    stateSelect.addEventListener("change", function() {
+
+        const selectedState = stateSelect.value;
+
+        districtSelect.innerHTML = "";
+        districtSelect.disabled = true;
+
+        if (!selectedState) {
+            districtSelect.add(
+                new Option("First select your State / UT", "")
+            );
+            return;
+        }
+
+        districtSelect.add(
+            new Option("Select District", "")
+        );
+
+        const districts = stateDistricts[selectedState] || [];
+
+        districts.forEach(function(districtName) {
+            districtSelect.add(
+                new Option(districtName, districtName)
+            );
+        });
+
+        districtSelect.disabled = false;
+    });
+
+
+    // Handle form submission.
+    document.getElementById("scholarshipForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const state = stateSelect.value;
+            const district = districtSelect.value;
+            const classLevel = document.getElementById("classLevel").value;
+            const schoolType = document.getElementById("schoolType").value;
+            const income = document.getElementById("income").value;
+            const community = document.getElementById("community").value;
+
+            const result = document.getElementById("result");
+
+            // Use textContent for user-provided selections to avoid
+            // inserting user-controlled text as HTML.
+            result.replaceChildren();
+
+            const heading = document.createElement("h3");
+            heading.textContent = "✅ Your Details Have Been Submitted!";
+            result.appendChild(heading);
+
+            const details = [
+                ["State / Union Territory", state],
+                ["District", district],
+                ["Current Class", classLevel],
+                ["School Type", schoolType],
+                ["Annual Family Income", income],
+                ["Community Category", community || "Not provided"]
+            ];
+
+            details.forEach(function(item) {
+                const paragraph = document.createElement("p");
+                const label = document.createElement("strong");
+
+                label.textContent = item[0] + ": ";
+
+                paragraph.appendChild(label);
+                paragraph.appendChild(document.createTextNode(item[1]));
+
+                result.appendChild(paragraph);
+            });
+
+            const note = document.createElement("p");
+            note.className = "result-note";
+            note.textContent =
+                "Suggested official places to check based on your details. " +
+                "These are leads to review, not confirmed matches or an eligibility decision.";
+            result.appendChild(note);
+
+            const schemeSection = document.createElement("section");
+            schemeSection.className = "scheme-section";
+
+            const schemeHeading = document.createElement("h3");
+            schemeHeading.textContent = "🔎 Scholarship options to verify";
+            schemeSection.appendChild(schemeHeading);
+
+            function addScheme(title, labelText, description, linkText, url) {
+                const card = document.createElement("article");
+                card.className = "scheme-card";
+
+                const label = document.createElement("span");
+                label.className = "match-label";
+                label.textContent = labelText;
+                card.appendChild(label);
+
+                const heading = document.createElement("h4");
+                heading.textContent = title;
+                card.appendChild(heading);
+
+                const desc = document.createElement("p");
+                desc.textContent = description;
+                card.appendChild(desc);
+
+                const link = document.createElement("a");
+                link.href = url;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = linkText + " ↗";
+                card.appendChild(link);
+
+                schemeSection.appendChild(card);
+            }
+
+            addScheme(
+                "National Scholarship Portal (NSP)",
+                "Official national portal",
+                "Search the current academic-year scheme list and open each scheme's official guidelines. Category, class, income, marks, school/institute and application dates can affect eligibility.",
+                "Browse official schemes",
+                "https://scholarships.gov.in/All-Scholarships"
+            );
+
+            if (state === "Tamil Nadu") {
+                addScheme(
+                    "Tamil Nadu Government scheme information",
+                    "Official Tamil Nadu source",
+                    "Check the relevant department's current rules for your class and category. The scheme list may include higher-education schemes, so confirm that a scheme applies to school students before applying.",
+                    "View Tamil Nadu scheme information",
+                    "https://tndce.tn.gov.in/Home/scholarship"
+                );
+            }
+
+            const isClass9to12 =
+                classLevel === "Class 9–10" || classLevel === "Class 11–12";
+
+            const incomeWithin250 =
+                income === "Below ₹1 lakh" ||
+                income === "₹1 lakh – ₹2.5 lakh";
+
+            if (isClass9to12 && incomeWithin250) {
+                addScheme(
+                    "PM YASASVI — Top Class Education in Schools",
+                    "Review category and school conditions",
+                    "This scheme is for eligible OBC, EBC and DNT students in Classes 9–12 whose annual family income does not exceed ₹2.5 lakh, and it applies only to schools listed under the scheme. Your selected community label alone does not prove eligibility; check the official category certificate, school list, fresh/renewal status and current dates.",
+                    "Check official NSP scheme details",
+                    "https://scholarships.gov.in/All-Scholarships"
+                );
+            }
+
+            if (classLevel === "Class 9–10") {
+                addScheme(
+                    "National Means-cum-Merit Scholarship (NMMSS)",
+                    "Check selection and income rules",
+                    "This is not an automatic match based on the form. It generally involves selection through the prescribed process at the earlier stage and other conditions. Read the current official guidelines to confirm whether you can apply as a fresh or renewal applicant.",
+                    "Check official NSP scheme details",
+                    "https://scholarships.gov.in/All-Scholarships"
+                );
+            }
+
+            result.appendChild(schemeSection);
+
+            const finalNote = document.createElement("p");
+            finalNote.className = "result-note";
+            finalNote.textContent =
+                "Before applying, verify the latest eligibility rules, school list, documents, application dates and deadline on the official scheme page. This prototype does not submit an application or guarantee eligibility.";
+            result.appendChild(finalNote);
+
+            result.style.display = "block";
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        });
+
+
+    // Clear the form and reset the district dropdown.
+    document.getElementById("scholarshipForm")
+        .addEventListener("reset", function() {
+
+            setTimeout(function() {
+                districtSelect.innerHTML =
+                    '<option value="">First select your State / UT</option>';
+
+                districtSelect.disabled = true;
+                resultReset();
+            }, 0);
+        });
+
+    function resultReset() {
+        const result = document.getElementById("result");
+
+        result.replaceChildren();
+        result.style.display = "none";
+    }
+</script>
+
+</body>
+</html>
