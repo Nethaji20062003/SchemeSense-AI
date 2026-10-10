@@ -33,11 +33,10 @@ header {
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
-  box-shadow: 0 4px 18px #14213d22;
 }
 
 header h1 { margin: 0; font-size: 26px; }
-header p { margin: 7px 0 0; color: #dbeafe; font-size: 14px; }
+header p { color: #dbeafe; margin-bottom: 0; }
 
 .logout {
   color: white;
@@ -49,8 +48,8 @@ header p { margin: 7px 0 0; color: #dbeafe; font-size: 14px; }
 
 main { max-width: 1150px; margin: 35px auto; padding: 0 20px; }
 .welcome { margin-bottom: 25px; }
-.welcome h2 { color: var(--navy); margin-bottom: 8px; }
-.welcome p { color: var(--muted); line-height: 1.6; }
+.welcome h2, #detail h2 { color: var(--navy); }
+.welcome p { color: var(--muted); line-height: 1.7; }
 
 .grid {
   display: grid;
@@ -66,37 +65,45 @@ main { max-width: 1150px; margin: 35px auto; padding: 0 20px; }
   box-shadow: 0 8px 24px #19365c0b;
   display: flex;
   flex-direction: column;
-  min-height: 235px;
-  transition: transform .2s, box-shadow .2s;
+  min-height: 225px;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px #19365c18;
-}
-
+.card:hover { box-shadow: 0 14px 30px #19365c18; }
 .icon { font-size: 35px; margin-bottom: 14px; }
-.card h3 { color: var(--navy); margin: 0 0 10px; font-size: 19px; }
+.card h3 { color: var(--navy); margin: 0 0 10px; }
 .card p { color: var(--muted); font-size: 14px; line-height: 1.6; flex: 1; }
 
-.card button, .back-button {
+button {
   background: var(--blue);
   color: white;
   border: 0;
-  padding: 12px 14px;
+  padding: 12px 15px;
   border-radius: 9px;
   font-weight: bold;
   cursor: pointer;
   font-size: 14px;
 }
 
-.card button:hover, .back-button:hover { background: #1d4ed8; }
-button:focus-visible, a:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+button:hover { background: #1d4ed8; }
+button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
 
-.note {
+#detail {
+  display: none;
+  background: white;
+  border: 1px solid #e0e8f5;
+  border-radius: 17px;
+  padding: 25px;
+  line-height: 1.8;
+}
+
+#detail h3 { color: var(--navy); margin-top: 24px; }
+#detail li { margin-bottom: 10px; overflow-wrap: anywhere; }
+#detail a { color: var(--blue); overflow-wrap: anywhere; }
+
+.notice {
   background: #fff8e6;
   border-left: 4px solid #e6a817;
-  padding: 14px 16px;
+  padding: 14px;
   border-radius: 8px;
   color: #66521c;
   line-height: 1.6;
@@ -104,38 +111,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #93c5fd; outline-offs
   margin-top: 25px;
 }
 
-footer { text-align: center; color: #64748b; font-size: 13px; padding: 25px; }
+footer { text-align: center; color: var(--muted); font-size: 13px; padding: 25px; }
 
-#informationPage {
-  display: none;
-  background: white;
-  border: 1px solid #e0e8f5;
-  border-radius: 17px;
-  padding: 25px;
-  box-shadow: 0 8px 24px #19365c0b;
-}
-
-#informationPage h2 { color: var(--navy); }
-#informationPage h3 { color: var(--navy); margin-top: 24px; }
-#informationPage p, #informationPage li { line-height: 1.7; }
-#informationPage a { color: var(--blue); overflow-wrap: anywhere; }
-
-.info-box {
-  background: #f1f6ff;
-  border-radius: 10px;
-  padding: 15px;
-  margin: 14px 0;
-}
-
-@media(max-width:850px) {
+@media(max-width: 850px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media(max-width:560px) {
+@media(max-width: 560px) {
   header h1 { font-size: 22px; }
   .grid { grid-template-columns: 1fr; }
   main { margin-top: 24px; padding: 0 15px; }
-  .card { min-height: 210px; }
 }
 </style>
 </head>
@@ -146,237 +131,272 @@ footer { text-align: center; color: #64748b; font-size: 13px; padding: 25px; }
     <h1>🎓 SchemeSense AI</h1>
     <p>Discover education support and welfare schemes</p>
   </div>
-  <a class="logout" href="login.html" onclick="logout()">Log out</a>
+  <a class="logout" id="logoutButton" href="login.html">Log out</a>
 </header>
 
 <main>
-  <section class="welcome" id="welcomeSection">
+  <section class="welcome" id="welcome">
     <h2>Welcome to your Dashboard 👋</h2>
-    <p>
-      Choose a category to explore relevant scheme information.
-      Check the official portal for current eligibility requirements,
-      application dates and benefits.
-    </p>
+    <p>Select any category to explore guidance and useful official websites.</p>
   </section>
 
-  <section class="grid" id="categoryGrid">
+  <section class="grid" id="categories">
+
     <article class="card">
       <div class="icon">🏫</div>
       <h3>School Scholarships</h3>
-      <p>Explore scholarship information for school students.</p>
-      <button onclick="openPage('school_scholarships.html')">Continue →</button>
+      <p>Explore scholarship guidance for school students.</p>
+      <button type="button" data-category="school">Continue →</button>
     </article>
 
     <article class="card">
       <div class="icon">🎓</div>
       <h3>College Scholarships</h3>
-      <p>Explore possible scholarship leads for Diploma, UG, PG and research students.</p>
-      <button onclick="openPage('college_scholarships.html')">Continue →</button>
+      <p>Explore scholarship guidance for Diploma, UG and PG students.</p>
+      <button type="button" data-category="college">Continue →</button>
     </article>
 
     <article class="card">
       <div class="icon">💡</div>
       <h3>Student Project Funding</h3>
-      <p>Learn where to look for student innovation and project support.</p>
-      <button onclick="showCategory('funding')">Continue →</button>
+      <p>Explore student innovation and project support resources.</p>
+      <button type="button" data-category="funding">Continue →</button>
     </article>
 
     <article class="card">
       <div class="icon">👵</div>
       <h3>Senior Citizen Welfare</h3>
-      <p>Explore general welfare and support information for senior citizens.</p>
-      <button onclick="showCategory('senior')">Continue →</button>
+      <p>Explore general welfare support resources for senior citizens.</p>
+      <button type="button" data-category="senior">Continue →</button>
     </article>
 
     <article class="card">
       <div class="icon">🤝</div>
       <h3>Community-Based Scholarships</h3>
-      <p>Learn about scholarships that may have community or category requirements.</p>
-      <button onclick="showCategory('community')">Continue →</button>
+      <p>Explore scholarships with community or category requirements.</p>
+      <button type="button" data-category="community">Continue →</button>
     </article>
 
     <article class="card">
       <div class="icon">💙</div>
       <h3>Single-Parent Student Support</h3>
-      <p>Explore education support information for students from single-parent families.</p>
-      <button onclick="showCategory('singleparent')">Continue →</button>
+      <p>Explore possible education support resources.</p>
+      <button type="button" data-category="single">Continue →</button>
     </article>
+
   </section>
 
-  <section id="informationPage" aria-live="polite">
-    <button class="back-button" onclick="goBack()">← Back to Dashboard</button>
-    <div id="informationContent"></div>
+  <section id="detail" aria-live="polite">
+    <button type="button" id="backButton">← Back to Dashboard</button>
+    <div id="detailContent"></div>
   </section>
 
-  <div class="note" id="importantNote">
+  <div class="notice" id="notice">
     <strong>Important:</strong> SchemeSense AI is a student project prototype.
-    It does not confirm eligibility, submit applications, or guarantee approval.
-    Always verify details through official sources.
+    It does not confirm eligibility or guarantee approval. Verify current
+    conditions, benefits and deadlines on official websites.
   </div>
 </main>
 
 <footer>© SchemeSense AI · Student project prototype</footer>
 
 <script>
-function logout() {
-  sessionStorage.removeItem("schemeDemoLoggedIn");
-  sessionStorage.removeItem("schemeDemoPhone");
-}
+"use strict";
 
-function openPage(page) {
-  window.location.href = new URL(page, window.location.href).href;
-}
-
-const categoryData = {
-  funding: {
-    title: "💡 Student Project Funding",
-    intro: "Explore possible sources of support for student innovation, prototypes and entrepreneurship.",
+const pages = {
+  school: {
+    title: "🏫 School Scholarships",
+    intro: "Scholarship eligibility may depend on class, school type, family income, marks and other scheme-specific conditions.",
     sections: [
-      {
-        title: "Where to look",
-        items: [
-          "Check your college department and innovation or entrepreneurship cell for internal project support.",
-          "Ask your faculty coordinator about student innovation competitions and eligible project grants.",
-          "Explore the official Startup India website for entrepreneurship programmes and current opportunities."
-        ]
-      }
+      ["What to check", [
+        "Check the student's class and school eligibility.",
+        "Review income, marks, attendance and document requirements if applicable.",
+        "Ask the school office about current scholarship notices and deadlines."
+      ]]
     ],
     links: [
-      { label: "Startup India — Official Website", url: "https://www.startupindia.gov.in/" },
-      { label: "AICTE — Official Website", url: "https://www.aicte-india.org/" }
+      ["National Scholarship Portal", "https://scholarships.gov.in/"],
+      ["Tamil Nadu Government", "https://www.tn.gov.in/"]
+    ]
+  },
+
+  college: {
+    title: "🎓 College Scholarships",
+    intro: "Students should check scholarships that match their course, institution, academic record and family circumstances.",
+    sections: [
+      ["What to check", [
+        "Check whether the scheme supports your course and institution.",
+        "Review family income and academic eligibility rules.",
+        "Ask your college scholarship office for current application details."
+      ]]
+    ],
+    links: [
+      ["National Scholarship Portal", "https://scholarships.gov.in/"],
+      ["AICTE Official Website", "https://www.aicte-india.org/"],
+      ["Tamil Nadu Government", "https://www.tn.gov.in/"]
+    ]
+  },
+
+  funding: {
+    title: "💡 Student Project Funding",
+    intro: "Students developing projects or prototypes can explore college innovation programmes and entrepreneurship resources.",
+    sections: [
+      ["Where to start", [
+        "Ask your college about project grants, innovation cells and incubation facilities.",
+        "Check eligibility before applying to a competition or funding programme.",
+        "Prepare a project summary, estimated budget and prototype description if requested."
+      ]]
+    ],
+    links: [
+      ["Startup India", "https://www.startupindia.gov.in/"],
+      ["AICTE Official Website", "https://www.aicte-india.org/"]
     ]
   },
 
   senior: {
     title: "👵 Senior Citizen Welfare",
-    intro: "Senior citizen benefits can depend on age, income, residence and the specific programme.",
+    intro: "Support may depend on age, income, residence and the specific welfare programme.",
     sections: [
-      {
-        title: "What to check",
-        items: [
-          "Check the current eligibility rules for old-age pension or other welfare assistance.",
-          "Ask the local Social Welfare Department or District Collectorate about application procedures.",
-          "Keep identity, age, residence and income documents ready if the official scheme requires them."
-        ]
-      }
+      ["What to check", [
+        "Check current old-age pension and welfare eligibility conditions.",
+        "Contact the local government welfare office for application guidance.",
+        "Prepare age, identity, residence or income documents if officially required."
+      ]]
     ],
     links: [
-      { label: "Tamil Nadu Government — Official Website", url: "https://www.tn.gov.in/" },
-      { label: "National Government Services Portal", url: "https://services.india.gov.in/" }
+      ["Tamil Nadu Government", "https://www.tn.gov.in/"],
+      ["National Government Services Portal", "https://services.india.gov.in/"]
     ]
   },
 
   community: {
     title: "🤝 Community-Based Scholarships",
-    intro: "Some scholarships have community, category, income, academic or institution requirements. Not every scheme applies to every student.",
+    intro: "Some scholarships have community or category requirements. Conditions differ by scheme.",
     sections: [
-      {
-        title: "How to check",
-        items: [
-          "Read the official scheme notification and its eligibility conditions.",
-          "Check whether the scheme is open for your education level and institution.",
-          "Verify any community certificate, income certificate, marks or deadline requirements on the official portal."
-        ]
-      }
+      ["What to check", [
+        "Read the official notification to understand who can apply.",
+        "Check course, institution, income and academic requirements.",
+        "Verify certificate requirements and application dates on the official portal."
+      ]]
     ],
     links: [
-      { label: "National Scholarship Portal", url: "https://scholarships.gov.in/" },
-      { label: "Tamil Nadu Government — Official Website", url: "https://www.tn.gov.in/" }
+      ["National Scholarship Portal", "https://scholarships.gov.in/"],
+      ["Tamil Nadu Government", "https://www.tn.gov.in/"]
     ]
   },
 
-  singleparent: {
+  single: {
     title: "💙 Single-Parent Student Support",
-    intro: "Students from single-parent families can check whether any current scholarship or education-support programme includes their circumstances in its eligibility rules.",
+    intro: "Students from single-parent families can check whether any current programme includes their circumstances in its eligibility criteria.",
     sections: [
-      {
-        title: "What to check",
-        items: [
-          "Review official scholarship eligibility rules, including family circumstances and income requirements.",
-          "Ask your school, college scholarship office or district welfare office about relevant support.",
-          "Submit family or income documents only when required by the official scheme."
-        ]
-      }
+      ["What to check", [
+        "Review official scholarship rules for family circumstances and income.",
+        "Ask your school or college office about available support.",
+        "Provide family documents only when required by the official programme."
+      ]]
     ],
     links: [
-      { label: "National Scholarship Portal", url: "https://scholarships.gov.in/" },
-      { label: "National Government Services Portal", url: "https://services.india.gov.in/" }
+      ["National Scholarship Portal", "https://scholarships.gov.in/"],
+      ["National Government Services Portal", "https://services.india.gov.in/"]
     ]
   }
 };
 
-function showCategory(key) {
-  const data = categoryData[key];
+const categoryGrid = document.getElementById("categories");
+const welcome = document.getElementById("welcome");
+const detail = document.getElementById("detail");
+const detailContent = document.getElementById("detailContent");
+const notice = document.getElementById("notice");
 
-  if (!data) {
-    alert("This category is not available yet.");
+categoryGrid.addEventListener("click", function(event) {
+  const button = event.target.closest("button[data-category]");
+  if (!button) return;
+
+  const key = button.dataset.category;
+  const page = pages[key];
+
+  if (!page) {
+    console.error("Category not found:", key);
     return;
   }
 
-  const content = document.getElementById("informationContent");
-  content.replaceChildren();
+  renderPage(page);
+});
 
-  const heading = document.createElement("h2");
-  heading.textContent = data.title;
-  content.appendChild(heading);
+function renderPage(page) {
+  detailContent.replaceChildren();
+
+  const title = document.createElement("h2");
+  title.textContent = page.title;
+  detailContent.appendChild(title);
 
   const intro = document.createElement("p");
-  intro.textContent = data.intro;
-  content.appendChild(intro);
+  intro.textContent = page.intro;
+  detailContent.appendChild(intro);
 
-  data.sections.forEach(section => {
-    const subheading = document.createElement("h3");
-    subheading.textContent = section.title;
-    content.appendChild(subheading);
+  page.sections.forEach(function(section) {
+    const heading = document.createElement("h3");
+    heading.textContent = section[0];
+    detailContent.appendChild(heading);
 
     const list = document.createElement("ul");
 
-    section.items.forEach(item => {
+    section[1].forEach(function(item) {
       const li = document.createElement("li");
       li.textContent = item;
       list.appendChild(li);
     });
 
-    content.appendChild(list);
+    detailContent.appendChild(list);
   });
 
   const linkHeading = document.createElement("h3");
   linkHeading.textContent = "Useful Official Websites";
-  content.appendChild(linkHeading);
+  detailContent.appendChild(linkHeading);
 
-  data.links.forEach(item => {
+  page.links.forEach(function(item) {
     const paragraph = document.createElement("p");
     const link = document.createElement("a");
-    link.href = item.url;
-    link.textContent = item.label;
+
+    link.href = item[1];
+    link.textContent = item[0];
     link.target = "_blank";
     link.rel = "noopener noreferrer";
+
     paragraph.appendChild(link);
-    content.appendChild(paragraph);
+    detailContent.appendChild(paragraph);
   });
 
-  const disclaimer = document.createElement("div");
-  disclaimer.className = "info-box";
+  const disclaimer = document.createElement("p");
+  disclaimer.className = "notice";
   disclaimer.textContent =
-    "Please verify current scheme names, eligibility, benefits and deadlines on the official website. This prototype does not determine eligibility or guarantee approval.";
-  content.appendChild(disclaimer);
+    "This is general guidance, not an official eligibility decision. Verify all current details with the relevant government department.";
 
-  document.getElementById("welcomeSection").style.display = "none";
-  document.getElementById("categoryGrid").style.display = "none";
-  document.getElementById("importantNote").style.display = "none";
-  document.getElementById("informationPage").style.display = "block";
+  detailContent.appendChild(disclaimer);
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  welcome.hidden = true;
+  categoryGrid.hidden = true;
+  notice.hidden = true;
+  detail.style.display = "block";
+
+  window.scrollTo(0, 0);
 }
 
-function goBack() {
-  document.getElementById("informationPage").style.display = "none";
-  document.getElementById("welcomeSection").style.display = "block";
-  document.getElementById("categoryGrid").style.display = "grid";
-  document.getElementById("importantNote").style.display = "block";
+document.getElementById("backButton").addEventListener("click", function() {
+  detail.style.display = "none";
+  detailContent.replaceChildren();
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+  welcome.hidden = false;
+  categoryGrid.hidden = false;
+  notice.hidden = false;
+
+  window.scrollTo(0, 0);
+});
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+  sessionStorage.removeItem("schemeDemoLoggedIn");
+  sessionStorage.removeItem("schemeDemoPhone");
+});
 </script>
 </body>
 </html>
